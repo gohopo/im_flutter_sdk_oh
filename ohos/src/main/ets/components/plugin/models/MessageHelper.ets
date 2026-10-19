@@ -15,7 +15,6 @@ import { ChatMessage, MessageDirection, ContentType, MessageStatus, MessageExtTy
   ChatType} from "@easemob/chatsdk";
 import EnumTool from "../EnumTool";
 
-import { JSON } from "@kit.ArkTS";
 import MessageBodyHelper from "./MessageBodyHelper";
 import { GetSafetyValue, IsObj, SafetyValue } from "../SafetyMapTool";
 import { Any } from "@ohos/flutter_ohos";
@@ -120,8 +119,8 @@ export default class MessageHelper {
         if(typeof v === "number" || typeof v === "string" || typeof v === "boolean") {
           ext.set(k, v);
         }else if(v instanceof Object){
-          // TODO: 待验证
-          message?.setJsonAttribute(k, JSON.stringify(v));
+          // chatsdk 1.11.0 起 setJsonAttribute 只接受 object，SDK 内部会自行 JSON.stringify
+          message?.setJsonAttribute(k, v);
         }
       }
       if(ext.size != 0) {
